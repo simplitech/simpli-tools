@@ -1,3 +1,5 @@
+.gradle
 .idea
-simpli-tools.iml
 build
+simpli-tools.iml
+out
