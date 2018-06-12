@@ -1,4 +1,4 @@
-package com.simpli.tools
+package br.com.simpli.tools
 
 import java.io.UnsupportedEncodingException
 import java.math.BigInteger
@@ -51,13 +51,13 @@ object SecurityUtils {
 
     @JvmOverloads
     fun decrypt(encrypted: String, key: String, decode: Boolean = false): String? {
-        var encrypted = encrypted
+        var tencrypted = encrypted
         try {
             if (decode) {
-                encrypted = URLDecoder.decode(encrypted, "UTF-8")
+                tencrypted = URLDecoder.decode(tencrypted, "UTF-8")
             }
 
-            val decoded = Base64.getDecoder().decode(encrypted.toByteArray())
+            val decoded = Base64.getDecoder().decode(tencrypted.toByteArray())
             val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
             val iv = byteArrayOf(1, 2, 3, 4, 5, 6, 6, 5, 4, 3, 2, 1, 7, 7, 7, 7)
             cipher.init(Cipher.DECRYPT_MODE, generateKey(key), IvParameterSpec(iv))

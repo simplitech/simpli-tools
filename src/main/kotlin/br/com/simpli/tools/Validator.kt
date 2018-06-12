@@ -1,4 +1,4 @@
-package com.simpli.tools
+package br.com.simpli.tools
 
 import java.util.InputMismatchException
 import java.util.regex.Matcher
@@ -17,10 +17,10 @@ object Validator {
      */
 
     fun formatCelPhone(celNumber: String): String {
-        var celNumber = celNumber
-        celNumber = "(" + celNumber.substring(0, 2) + ")" + celNumber.substring(2, celNumber.length)
-        celNumber = celNumber.substring(0, 4) + celNumber.substring(4, 9) + "-" + celNumber.substring(9, celNumber.length)
-        return celNumber
+        var tCelNumber = celNumber
+        tCelNumber = "(" + tCelNumber.substring(0, 2) + ")" + tCelNumber.substring(2, tCelNumber.length)
+        tCelNumber = tCelNumber.substring(0, 4) + tCelNumber.substring(4, 9) + "-" + tCelNumber.substring(9, tCelNumber.length)
+        return tCelNumber
     }
 
     fun isValidPhoneNumber(phoneNumber: String): Boolean {
@@ -100,8 +100,8 @@ object Validator {
         return true
     }
 
-    fun isCPF(CPF: String?): Boolean {
-        var CPF: String = CPF ?: return false
+    fun isCPF(pCPF: String?): Boolean {
+        var CPF: String = pCPF ?: return false
 
         CPF = CPF.replace("-", "")
         CPF = CPF.replace(".", "")
@@ -170,11 +170,10 @@ object Validator {
 
     }
 
-    fun isCNPJ(CNPJ: String): Boolean {
-        var CNPJ = CNPJ
-        var saida = true
-        var formatCNPJ = CNPJ
-        formatCNPJ = CNPJ.replace(".", "")
+    fun isCNPJ(pCNPJ: String): Boolean {
+        var CNPJ = pCNPJ
+        var saida: Boolean
+        var formatCNPJ = CNPJ.replace(".", "")
         formatCNPJ = formatCNPJ.replace("/", "")
         formatCNPJ = formatCNPJ.replace("-", "")
 
