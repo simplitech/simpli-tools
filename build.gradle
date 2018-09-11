@@ -3,15 +3,18 @@ version '1.0.0'
 
 apply plugin: 'maven-publish'
 apply plugin: 'kotlin'
+apply plugin: 'org.jetbrains.dokka'
 
 buildscript {
     ext.kotlin_version = '1.2.31'
 
     repositories {
         mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.9"
     }
 }
 
@@ -34,7 +37,45 @@ compileTestKotlin {
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            pom {
+                name = 'Simpli Tools'
+                description = 'A collection of tools from Simpli Tech'
+                url = 'https://github.com/simplitech/simpli-tools'
+                licenses {
+                    license {
+                        name = 'The Apache Software License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'joao.lippi'
+                        name = 'Joao Pedro Lippi'
+                        email = 'joao.lippi@simpli.com.br'
+                    }
+                }
+                scm {
+                    connection = ''
+                    developerConnection
+                }
+            }
+
             from components.java
         }
     }
+}
+
+dokka {
+    outputFormat = 'javadoc'
+    outputDirectory = "$buildDir/javadoc"
+}
+
+task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
+    outputFormat = 'javadoc'
+    outputDirectory = "$buildDir/javadoc"
+}
+
+task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
+    classifier = 'javadoc'
+    from "$buildDir/javadoc"
 }
