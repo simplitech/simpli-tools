@@ -3,3 +3,5 @@
 build
 simpli-tools.iml
 out
+gradle.properties
+key.gpg

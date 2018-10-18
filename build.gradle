@@ -1,5 +1,5 @@
 group 'br.com.simpli'
-version '1.0.0'
+version '1.1.0'
 
 apply plugin: 'maven'
 apply plugin: 'kotlin'
@@ -81,6 +81,11 @@ uploadArchives {
                         id 'joao.lippi'
                         name 'Joao Pedro Lippi'
                         email 'joao.lippi@simpli.com.br'
+                    }
+                    developer {
+                        id 'melanke'
+                        name 'Gil Lopes Bueno'
+                        email 'gil.bueno@simpli.com.br'
                     }
                 }
                 scm {
