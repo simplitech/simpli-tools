@@ -28,14 +28,17 @@ import java.nio.charset.Charset
 object SecurityUtils {
 
     @JvmOverloads
-    fun encrypt(raw: String, key: String, encode: Boolean = false): String? {
+    fun encrypt(raw: String, key: String, encode: Boolean = false, urlSafe: Boolean = false): String? {
         try {
             val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
             val iv = byteArrayOf(1, 2, 3, 4, 5, 6, 6, 5, 4, 3, 2, 1, 7, 7, 7, 7)
             cipher.init(Cipher.ENCRYPT_MODE, generateKey(key), IvParameterSpec(iv))
             val b = raw.toByteArray(charset("UTF-8"))
             val ciphertext = cipher.doFinal(b, 0, b.size)
-            val encoded = Base64.getEncoder().encode(ciphertext)
+            val encoded = when (urlSafe) {
+                true -> Base64.getUrlEncoder()
+                false -> Base64.getEncoder()
+            }.encode(ciphertext)
             var encryptedValue = String(encoded, charset("UTF-8"))
 
             if (encode) {
