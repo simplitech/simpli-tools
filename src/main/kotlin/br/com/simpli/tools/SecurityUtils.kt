@@ -53,14 +53,17 @@ object SecurityUtils {
     }
 
     @JvmOverloads
-    fun decrypt(encrypted: String, key: String, decode: Boolean = false): String? {
+    fun decrypt(encrypted: String, key: String, decode: Boolean = false, urlSafe: Boolean = false): String? {
         var tencrypted = encrypted
         try {
             if (decode) {
                 tencrypted = URLDecoder.decode(tencrypted, "UTF-8")
             }
 
-            val decoded = Base64.getDecoder().decode(tencrypted.toByteArray())
+            val decoded = when (urlSafe) {
+                true -> Base64.getUrlDecoder().decode(tencrypted.toByteArray())
+                false -> Base64.getDecoder().decode(tencrypted.toByteArray())
+            }
             val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
             val iv = byteArrayOf(1, 2, 3, 4, 5, 6, 6, 5, 4, 3, 2, 1, 7, 7, 7, 7)
             cipher.init(Cipher.DECRYPT_MODE, generateKey(key), IvParameterSpec(iv))
