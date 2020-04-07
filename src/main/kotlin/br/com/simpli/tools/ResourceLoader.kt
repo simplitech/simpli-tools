@@ -1,6 +1,7 @@
 package br.com.simpli.tools
 
 import java.io.InputStream
+import java.io.InputStreamReader
 import java.util.*
 
 object ResourceLoader {
@@ -19,6 +20,14 @@ object ResourceLoader {
         return Thread.currentThread().contextClassLoader?.getResourceAsStream(path)
             ?: classes.getFirstStream(path)
             ?: this.javaClass.getResourceAsStream(path)
+    }
+
+    fun getString(path: String, vararg classes: Class<*>): String? {
+        return getStreamResource(path, *classes)?.run {
+            InputStreamReader(this).use {
+                it.readText()
+            }
+        }
     }
 
     private fun Array<out Class<*>>.getFirstStream(path: String): InputStream? {
